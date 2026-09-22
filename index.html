@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bisX — x86_32 Bare-Metal Kernel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --md-sys-color-primary: #d0bcff;
+            --md-sys-color-on-primary: #381e72;
+            --md-sys-color-primary-container: #4f378b;
+            --md-sys-color-on-primary-container: #eaddff;
+            --md-sys-color-surface: #141218;
+            --md-sys-color-on-surface: #e6e0e9;
+            --md-sys-color-surface-variant: #49454f;
+            --md-sys-color-on-surface-variant: #cac4d0;
+            --md-sys-color-surface-container: #211f26;
+            --md-sys-color-surface-container-high: #2b2930;
+            --md-sys-color-outline: #938f99;
+            --md-sys-color-outline-variant: #49454f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--md-sys-color-surface-container);
+            padding: 16px 28px;
+            border-radius: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--md-sys-color-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-text {
+            background: transparent;
+            color: var(--md-sys-color-on-surface-variant);
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .btn-text:hover {
+            background: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .hero {
+            background: var(--md-sys-color-surface-container);
+            border-radius: 32px;
+            padding: 48px 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 24px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(208, 188, 255, 0.06) 0%, transparent 60%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge {
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            padding: 6px 16px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--md-sys-color-on-surface);
+            letter-spacing: -0.5px;
+        }
+
+        p.subtitle {
+            font-size: 1.1rem;
+            color: var(--md-sys-color-on-surface-variant);
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .mascot-card {
+            background: var(--md-sys-color-surface-container-high);
+            border: 2px solid var(--md-sys-color-outline-variant);
+            border-radius: 20px;
+            padding: 20px 36px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+            transition: transform 0.3s;
+        }
+
+        .mascot-card:hover {
+            transform: scale(1.02);
+        }
+
+        .ascii-art {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            line-height: 1.2;
+            color: var(--md-sys-color-primary);
+            white-space: pre;
+        }
+
+        .mascot-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--md-sys-color-outline);
+            font-weight: 700;
+        }
+
+        .actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 12px;
+        }
+
+        .btn-filled {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            padding: 14px 28px;
+            border-radius: 24px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(208, 188, 255, 0.2);
+        }
+
+        .btn-filled:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(208, 188, 255, 0.3);
+        }
+
+        .btn-tonal {
+            background: var(--md-sys-color-surface-container-high);
+            color: var(--md-sys-color-on-surface);
+            padding: 14px 28px;
+            border-radius: 24px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .btn-tonal:hover {
+            background: var(--md-sys-color-surface-variant);
+            transform: translateY(-2px);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--md-sys-color-surface-container);
+            border-radius: 24px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .feature-card h3 {
+            color: var(--md-sys-color-primary);
+            font-size: 1.25rem;
+        }
+
+        .feature-card p {
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--md-sys-color-outline);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--md-sys-color-primary);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Навигация -->
+        <header>
+            <div class="logo-area">
+                <span>⚡ bisX</span>
+            </div>
+            <div class="nav-links">
+                <a href="https://github.com/urant1um/bisX" class="btn-text" target="_blank">GitHub</a>
+                <a href="https://github.com/urant1um" class="btn-text" target="_blank">Автор</a>
+            </div>
+        </header>
+
+        <!-- Главный экран -->
+        <section class="hero">
+            <div class="badge">x86_32 Bare-Metal Environment</div>
+            <h1>Операционная система bisX</h1>
+            <p class="subtitle">Собственное кастомное ядро и низкоуровневая среда. Разрабатывай, запускай в QEMU и тестируй свои идеи на железе!</p>
+            
+            <!-- Маскотик -->
+            <div class="mascot-card">
+                <pre class="ascii-art">
+ /\_/\
+( 0.0 )
+ > ^ <
+                </pre>
+                <span class="mascot-label">наш талисман</span>
+            </div>
+
+            <!-- Кнопки скачивания -->
+            <div class="actions">
+                <a href="https://github.com/urant1um/bisX/archive/refs/heads/main.zip" class="btn-filled">
+                    📥 Скачать архив (.zip)
+                </a>
+                <a href="https://github.com/urant1um/bisX" class="btn-tonal" target="_blank">
+                    ⭐ Проект на GitHub
+                </a>
+            </div>
+        </section>
+
+        <!-- Карточки с фичами -->
+        <div class="features">
+            <div class="feature-card">
+                <h3>🛠️ Низкий уровень</h3>
+                <p>Настоящий bare-metal x86_32 код без лишних тяжелых библиотек и зависимостей.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🚀 Быстрый запуск</h3>
+                <p>Удобно тестировать в QEMU и собирать образы прямо из терминала на Linux.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🐱 Фирменный вайб</h3>
+                <p>Наш котик одобряет каждый успешный коммит и следит за порядком в репозитории.</p>
+            </div>
+        </div>
+
+        <!-- Подвал -->
+        <footer>
+            Создано с душой • Автор: <a href="https://github.com/urant1um" target="_blank">urant1um</a>
+        </footer>
+    </div>
+</body>
+</html>
