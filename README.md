@@ -42,5 +42,4 @@ bisX OS 是一个从零开始采用 C 和汇编语言编写的独立操作系统
 
 ## Building and Running
 
-make
-make run
+make && qemu-system-i386 -drive id=disk,file=boot/bisX.bin,format=raw,if=none -device ide-hd,drive=disk
