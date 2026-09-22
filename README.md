@@ -14,11 +14,11 @@
 ## English
 
 ### Overview
-bisX OS is a lightweight, high-performance operating system written from scratch in C and Assembly. It utilizes a custom 32-bit TrueColor Direct-Framebuffer GUI engine (~16.7M colors) operating directly on hardware without relying on display servers such as X11 or Wayland.
+bisX OS is a lightweight, high-performance operating system written from scratch in C and Assembly. It utilizes a custom 32-bit TrueColor Direct-Framebuffer GUI engine (~16.7M colors) operating directly on hardware without relying on display servers.
 
 ### Tech Stack
 * Kernel Languages: C, Assembly (NASM)
-* Bootloader: GRUB (Multiboot)
+* Bootloader: BScX (Multiboot)
 * Target Architecture: x86_64
 * Display Engine: VBE/VESA Direct Framebuffer Driver
 
@@ -37,7 +37,7 @@ bisX OS — легкая и высокопроизводительная опе�
 
 ### Технологический стек
 * Языки ядра: C, Ассемблер (NASM)
-* Загрузчик: GRUB (Multiboot)
+* Загрузчик: BScX (Multiboot)
 * Архитектура: x86_64
 * Графический движок: Драйвер VBE/VESA Direct Framebuffer
 
@@ -56,7 +56,7 @@ bisX OS 是一个从零开始采用 C 和汇编语言编写的高性能轻量级
 
 ### 技术栈
 * 内核语言: C, 汇编 (NASM)
-* 引导程序: GRUB (Multiboot)
+* 引导程序: BScX (Multiboot)
 * 目标架构: x86_64
 * 显示引擎: VBE/VESA Direct Framebuffer 驱动程序
 
