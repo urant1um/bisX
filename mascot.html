@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uranie — bisX Mascot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #d0bcff;
+            --surface: #141218;
+            --on-surface: #e6e0e9;
+            --on-surface-variant: #cac4d0;
+            --surface-container: #211f26;
+            --surface-container-high: #2b2930;
+            --outline-variant: #49454f;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--surface); color: var(--on-surface); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 24px; }
+        .container { width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 24px; align-items: center; text-align: center; }
+        
+        header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: var(--surface-container); padding: 16px 28px; border-radius: 24px; border: 1px solid var(--outline-variant); }
+        .logo-area { font-weight: 800; font-size: 1.4rem; color: var(--primary); text-decoration: none; }
+        .nav-links { display: flex; gap: 8px; }
+        .btn-text { background: transparent; color: var(--on-surface-variant); border: none; padding: 10px 16px; border-radius: 20px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }
+        .btn-text:hover { background: var(--surface-container-high); color: var(--on-surface); }
+
+        .mascot-hero { background: var(--surface-container); border-radius: 32px; padding: 48px; border: 1px solid var(--outline-variant); display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
+        h1 { color: var(--primary); font-size: 2.2rem; font-weight: 800; }
+        p { color: var(--on-surface-variant); max-width: 520px; line-height: 1.6; font-size: 0.95rem; }
+
+        .ascii-box { background: var(--surface-container-high); border: 1px solid var(--outline-variant); padding: 28px 48px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; font-size: 1.4rem; color: var(--primary); white-space: pre; line-height: 1.2; }
+
+        footer { text-align: center; padding: 20px; color: var(--outline-variant); font-size: 0.85rem; }
+        footer a { color: var(--primary); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="logo-area">bisX</a>
+            <div class="nav-links">
+                <a href="index.html" class="btn-text">Главная</a>
+                <a href="docs.html" class="btn-text">Документация</a>
+            </div>
+        </header>
+
+        <div class="mascot-hero">
+            <h1>Маскот Uranie</h1>
+            <p>Официальный символ проекта bisX. ASCII-арт талисмана внедрен непосредственно в структуру сайта и консольный вывод ядра.</p>
+            
+            <div class="ascii-box">
+ /\_/\
+( 0.0 )
+ > ^ <
+            </div>
+        </div>
+
+        <footer>
+            Автор: <a href="https://github.com/urant1um" target="_blank">urant1um</a>
+        </footer>
+    </div>
+</body>
+</html>
