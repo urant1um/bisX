@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,18 +7,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --md-sys-color-primary: #d0bcff;
-            --md-sys-color-on-primary: #381e72;
-            --md-sys-color-primary-container: #4f378b;
-            --md-sys-color-on-primary-container: #eaddff;
-            --md-sys-color-surface: #141218;
-            --md-sys-color-on-surface: #e6e0e9;
-            --md-sys-color-surface-variant: #49454f;
-            --md-sys-color-on-surface-variant: #cac4d0;
-            --md-sys-color-surface-container: #211f26;
-            --md-sys-color-surface-container-high: #2b2930;
-            --md-sys-color-outline: #938f99;
-            --md-sys-color-outline-variant: #49454f;
+            --primary: #d0bcff;
+            --on-primary: #381e72;
+            --primary-container: #4f378b;
+            --on-primary-container: #eaddff;
+            --surface: #141218;
+            --on-surface: #e6e0e9;
+            --surface-variant: #49454f;
+            --on-surface-variant: #cac4d0;
+            --surface-container: #211f26;
+            --surface-container-high: #2b2930;
+            --outline: #938f99;
+            --outline-variant: #49454f;
+            --transition: all 0.25s ease;
         }
 
         * {
@@ -29,8 +30,8 @@
         }
 
         body {
-            background-color: var(--md-sys-color-surface);
-            color: var(--md-sys-color-on-surface);
+            background-color: var(--surface);
+            color: var(--on-surface);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -41,65 +42,99 @@
 
         .container {
             width: 100%;
-            max-width: 900px;
+            max-width: 960px;
             display: flex;
             flex-direction: column;
             gap: 24px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--md-sys-color-surface-container);
+            background: var(--surface-container);
             padding: 16px 28px;
             border-radius: 24px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border: 1px solid var(--outline-variant);
         }
 
         .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
             font-weight: 800;
-            font-size: 1.5rem;
-            color: var(--md-sys-color-primary);
+            font-size: 1.4rem;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
         }
 
         .nav-links {
             display: flex;
-            gap: 12px;
+            gap: 8px;
+            align-items: center;
         }
 
         .btn-text {
             background: transparent;
-            color: var(--md-sys-color-on-surface-variant);
+            color: var(--on-surface-variant);
             border: none;
-            padding: 10px 18px;
+            padding: 10px 16px;
             border-radius: 20px;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
-            transition: background 0.2s, color 0.2s;
+            transition: var(--transition);
+            font-size: 0.9rem;
         }
 
-        .btn-text:hover {
-            background: var(--md-sys-color-surface-variant);
-            color: var(--md-sys-color-on-surface);
+        .btn-text:hover, .btn-text.active {
+            background: var(--surface-variant);
+            color: var(--on-surface);
+        }
+
+        .lang-switcher {
+            display: flex;
+            background: var(--surface-container-high);
+            border-radius: 20px;
+            padding: 4px;
+            gap: 2px;
+            border: 1px solid var(--outline-variant);
+            margin-left: 8px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--on-surface-variant);
+            padding: 6px 12px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            color: var(--on-primary);
         }
 
         .hero {
-            background: var(--md-sys-color-surface-container);
+            background: var(--surface-container);
             border-radius: 32px;
             padding: 48px 32px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            gap: 24px;
+            gap: 20px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            border: 1px solid var(--outline-variant);
         }
 
         .hero::before {
@@ -109,7 +144,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(208, 188, 255, 0.06) 0%, transparent 60%);
+            background: radial-gradient(circle, rgba(208, 188, 255, 0.05) 0%, transparent 60%);
             z-index: 0;
             pointer-events: none;
         }
@@ -120,208 +155,296 @@
         }
 
         .badge {
-            background: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-on-primary-container);
+            background: var(--primary-container);
+            color: var(--on-primary-container);
             padding: 6px 16px;
             border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-size: 0.8rem;
+            font-weight: 700;
             letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         h1 {
             font-size: 2.8rem;
             font-weight: 800;
-            color: var(--md-sys-color-on-surface);
+            color: var(--on-surface);
             letter-spacing: -0.5px;
         }
 
         p.subtitle {
-            font-size: 1.1rem;
-            color: var(--md-sys-color-on-surface-variant);
-            max-width: 600px;
+            font-size: 1.05rem;
+            color: var(--on-surface-variant);
+            max-width: 620px;
             line-height: 1.6;
-        }
-
-        .mascot-card {
-            background: var(--md-sys-color-surface-container-high);
-            border: 2px solid var(--md-sys-color-outline-variant);
-            border-radius: 20px;
-            padding: 20px 36px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
-            transition: transform 0.3s;
-        }
-
-        .mascot-card:hover {
-            transform: scale(1.02);
-        }
-
-        .ascii-art {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.25rem;
-            line-height: 1.2;
-            color: var(--md-sys-color-primary);
-            white-space: pre;
-        }
-
-        .mascot-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--md-sys-color-outline);
-            font-weight: 700;
         }
 
         .actions {
             display: flex;
-            gap: 16px;
+            gap: 12px;
             flex-wrap: wrap;
             justify-content: center;
-            margin-top: 12px;
+            margin-top: 8px;
         }
 
         .btn-filled {
-            background: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
-            padding: 14px 28px;
-            border-radius: 24px;
+            background: var(--primary);
+            color: var(--on-primary);
+            padding: 12px 24px;
+            border-radius: 20px;
             font-weight: 700;
             text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 12px rgba(208, 188, 255, 0.2);
+            transition: var(--transition);
+            font-size: 0.95rem;
         }
 
         .btn-filled:hover {
+            opacity: 0.9;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(208, 188, 255, 0.3);
         }
 
         .btn-tonal {
-            background: var(--md-sys-color-surface-container-high);
-            color: var(--md-sys-color-on-surface);
-            padding: 14px 28px;
-            border-radius: 24px;
+            background: var(--surface-container-high);
+            color: var(--on-surface);
+            padding: 12px 24px;
+            border-radius: 20px;
             font-weight: 700;
             text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid var(--md-sys-color-outline-variant);
-            transition: background 0.2s, transform 0.2s;
+            border: 1px solid var(--outline-variant);
+            transition: var(--transition);
+            font-size: 0.95rem;
         }
 
         .btn-tonal:hover {
-            background: var(--md-sys-color-surface-variant);
+            background: var(--surface-variant);
             transform: translateY(-2px);
+        }
+
+        .terminal-box {
+            width: 100%;
+            max-width: 680px;
+            background: #0c0b0e;
+            border: 1px solid var(--outline-variant);
+            border-radius: 16px;
+            overflow: hidden;
+            text-align: left;
+            margin-top: 8px;
+        }
+
+        .terminal-header {
+            background: var(--surface-container-high);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--outline-variant);
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+        
+        .terminal-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--outline);
+            margin-left: 8px;
+        }
+
+        .terminal-body {
+            padding: 18px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #a6e3a1;
+            line-height: 1.6;
+        }
+
+        .command {
+            color: var(--primary);
         }
 
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
+            gap: 16px;
         }
 
         .feature-card {
-            background: var(--md-sys-color-surface-container);
+            background: var(--surface-container);
             border-radius: 24px;
             padding: 28px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            border: 1px solid var(--md-sys-color-outline-variant);
+            gap: 10px;
+            border: 1px solid var(--outline-variant);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
         }
 
         .feature-card h3 {
-            color: var(--md-sys-color-primary);
-            font-size: 1.25rem;
+            color: var(--primary);
+            font-size: 1.15rem;
+            font-weight: 700;
         }
 
         .feature-card p {
-            color: var(--md-sys-color-on-surface-variant);
-            font-size: 0.95rem;
+            color: var(--on-surface-variant);
+            font-size: 0.9rem;
             line-height: 1.5;
         }
 
         footer {
             text-align: center;
             padding: 20px;
-            color: var(--md-sys-color-outline);
-            font-size: 0.9rem;
+            color: var(--outline);
+            font-size: 0.85rem;
         }
 
         footer a {
-            color: var(--md-sys-color-primary);
+            color: var(--primary);
             text-decoration: none;
         }
+
+        /* Управление переводами */
+        [lang-en], [lang-zh] { display: none; }
+        html[data-lang="en"] [lang-ru], html[data-lang="en"] [lang-zh] { display: none; }
+        html[data-lang="en"] [lang-en] { display: inline; }
+        html[data-lang="en"] div[lang-en], html[data-lang="en"] p[lang-en], html[data-lang="en"] h1[lang-en], html[data-lang="en"] span[lang-en] { display: block; }
+
+        html[data-lang="zh"] [lang-ru], html[data-lang="zh"] [lang-en] { display: none; }
+        html[data-lang="zh"] [lang-zh] { display: inline; }
+        html[data-lang="zh"] div[lang-zh], html[data-lang="zh"] p[lang-zh], html[data-lang="zh"] h1[lang-zh], html[data-lang="zh"] span[lang-zh] { display: block; }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Навигация -->
+        <!-- Шапка -->
         <header>
-            <div class="logo-area">
-                <span>⚡ bisX</span>
-            </div>
+            <a href="index.html" class="logo-area">bisX</a>
             <div class="nav-links">
-                <a href="https://github.com/urant1um/bisX" class="btn-text" target="_blank">GitHub</a>
-                <a href="https://github.com/urant1um" class="btn-text" target="_blank">Автор</a>
+                <a href="index.html" class="btn-text active">
+                    <span lang-ru>Главная</span>
+                    <span lang-en style="display:none">Home</span>
+                    <span lang-zh style="display:none">首页</span>
+                </a>
+                <a href="docs.html" class="btn-text">
+                    <span lang-ru>Документация</span>
+                    <span lang-en style="display:none">Docs</span>
+                    <span lang-zh style="display:none">文档</span>
+                </a>
+                <a href="mascot.html" class="btn-text">Uranie</a>
+
+                <div class="lang-switcher">
+                    <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+                    <button class="lang-btn" onclick="setLang('en')">EN</button>
+                    <button class="lang-btn" onclick="setLang('zh')">ZH</button>
+                </div>
             </div>
         </header>
 
-        <!-- Главный экран -->
+        <!-- Герой-секция -->
         <section class="hero">
-            <div class="badge">x86_32 Bare-Metal Environment</div>
-            <h1>Операционная система bisX</h1>
-            <p class="subtitle">Собственное кастомное ядро и низкоуровневая среда. Разрабатывай, запускай в QEMU и тестируй свои идеи на железе!</p>
-            
-            <!-- Маскотик -->
-            <div class="mascot-card">
-                <pre class="ascii-art">
- /\_/\
-( 0.0 )
- > ^ <
-                </pre>
-                <span class="mascot-label">наш талисман</span>
+            <div class="badge">
+                <span lang-ru>x86_32 Bare-Metal Среда</span>
+                <span lang-en style="display:none">x86_32 Bare-Metal Environment</span>
+                <span lang-zh style="display:none">x86_32 裸机环境</span>
             </div>
 
-            <!-- Кнопки скачивания -->
+            <h1 lang-ru>Операционная система bisX</h1>
+            <h1 lang-en style="display:none">bisX Operating System</h1>
+            <h1 lang-zh style="display:none">bisX 操作系统</h1>
+
+            <p class="subtitle" lang-ru>Низкоуровневое кастомное ядро для архитектуры x86_32. Разработка на Linux, сборка сырых дисковых образов и запуск в QEMU.</p>
+            <p class="subtitle" lang-en style="display:none">Low-level custom kernel for x86_32 architecture. Development on Linux, raw disk image building, and QEMU execution.</p>
+            <p class="subtitle" lang-zh style="display:none">面向 x86_32 架构的低级自定义内核。在 Linux 上开发、构建原始磁盘镜像并在 QEMU 中运行。</p>
+
+            <!-- Терминал -->
+            <div class="terminal-box">
+                <div class="terminal-header">
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
+                    <span class="terminal-title">bash — fedora@localhost</span>
+                </div>
+                <div class="terminal-body">
+                    <span class="command">$</span> qemu-img create -f raw disk.img 24M<br>
+                    <span style="color: var(--outline);">Formatting 'disk.img', fmt=raw size=25165824</span><br>
+                    <span class="command">$</span> qemu-system-i386 -drive format=raw,file=disk.img<br>
+                    <span style="color: #f38ba8;">[bisX kernel booting...] Uranie is online!</span>
+                </div>
+            </div>
+
+            <!-- Действия -->
             <div class="actions">
                 <a href="https://github.com/urant1um/bisX/archive/refs/heads/main.zip" class="btn-filled">
-                    📥 Скачать архив (.zip)
+                    <span lang-ru>Скачать архив (.zip)</span>
+                    <span lang-en style="display:none">Download Source (.zip)</span>
+                    <span lang-zh style="display:none">下载源码 (.zip)</span>
                 </a>
                 <a href="https://github.com/urant1um/bisX" class="btn-tonal" target="_blank">
-                    ⭐ Проект на GitHub
+                    <span>GitHub Repository</span>
                 </a>
             </div>
         </section>
 
-        <!-- Карточки с фичами -->
+        <!-- Фичи -->
         <div class="features">
             <div class="feature-card">
-                <h3>🛠️ Низкий уровень</h3>
-                <p>Настоящий bare-metal x86_32 код без лишних тяжелых библиотек и зависимостей.</p>
+                <h3 lang-ru>Чистый Bare-Metal</h3>
+                <h3 lang-en style="display:none">Pure Bare-Metal</h3>
+                <h3 lang-zh style="display:none">纯正裸机</h3>
+                <p lang-ru>Полное отсутствие сторонних библиотек. Прямое управление регистрами x86_32 и памятью.</p>
+                <p lang-en style="display:none">No heavy dependencies or external libraries. Direct x86_32 register and memory manipulation.</p>
+                <p lang-zh style="display:none">完全无第三方依赖库。直接进行 x86_32 寄存器与内存控制。</p>
             </div>
             <div class="feature-card">
-                <h3>🚀 Быстрый запуск</h3>
-                <p>Удобно тестировать в QEMU и собирать образы прямо из терминала на Linux.</p>
+                <h3 lang-ru>Запуск в QEMU</h3>
+                <h3 lang-en style="display:none">QEMU Execution</h3>
+                <h3 lang-zh style="display:none">QEMU 运行</h3>
+                <p lang-ru>Удобная сборка и отладка в Fedora. Создание образов через qemu-img и быстрый старт.</p>
+                <p lang-en style="display:none">Streamlined build and debug pipeline on Fedora. Raw image creation via qemu-img.</p>
+                <p lang-zh style="display:none">在 Fedora 上高效构建与调试。通过 qemu-img 快速生成镜像。</p>
             </div>
             <div class="feature-card">
-                <h3>🐱 Фирменный вайб</h3>
-                <p>Наш котик одобряет каждый успешный коммит и следит за порядком в репозитории.</p>
+                <h3 lang-ru>Талисман Uranie</h3>
+                <h3 lang-en style="display:none">Uranie Mascot</h3>
+                <h3 lang-zh style="display:none">吉祥物 Uranie</h3>
+                <p lang-ru>Официальный ASCII-символ проекта, интегрированный в ядро и документацию.</p>
+                <p lang-en style="display:none">Official ASCII mascot integrated into the kernel codebase and documentation.</p>
+                <p lang-zh style="display:none">集成在内核代码与文档中的官方 ASCII 吉祥物。</p>
             </div>
         </div>
 
-        <!-- Подвал -->
         <footer>
-            Создано с душой • Автор: <a href="https://github.com/urant1um" target="_blank">urant1um</a>
+            <span lang-ru>Разработчик:</span>
+            <span lang-en style="display:none">Developer:</span>
+            <span lang-zh style="display:none">开发者:</span>
+            <a href="https://github.com/urant1um" target="_blank">urant1um</a>
         </footer>
     </div>
+
+    <script>
+        function setLang(lang) {
+            document.documentElement.setAttribute('data-lang', lang);
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const isRu = lang === 'ru';
+            const isEn = lang === 'en';
+            const isZh = lang === 'zh';
+
+            document.querySelectorAll('[lang-ru]').forEach(el => el.style.display = isRu ? (el.tagName === 'SPAN' ? 'inline' : 'block') : 'none');
+            document.querySelectorAll('[lang-en]').forEach(el => el.style.display = isEn ? (el.tagName === 'SPAN' ? 'inline' : 'block') : 'none');
+            document.querySelectorAll('[lang-zh]').forEach(el => el.style.display = isZh ? (el.tagName === 'SPAN' ? 'inline' : 'block') : 'none');
+        }
+    </script>
 </body>
 </html>
